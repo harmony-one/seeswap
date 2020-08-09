@@ -8,7 +8,7 @@ echo "[setup] Import wallet private key: "
 read -r pk
 
 env_file="# Network config
-ENDPOINT='https://api.s0.b.hmny.io'
+ENDPOINT='https://api.s0.t.hmny.io'
 
 # Pool config
 POOL='0x89ca86c910bf74beaad769b91e2ed277e6d86de3'
@@ -28,3 +28,5 @@ PRIVATE_KEY='${pk}'
 echo "$env_file" | tee ${home}/.env > /dev/null
 
 echo "[setup] Complete"
+
+/bin/bash
