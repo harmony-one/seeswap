@@ -9,7 +9,6 @@ read -r pk
 
 env_file="# Network config
 ENDPOINT='https://api.s0.b.hmny.io'
-CHAINID='1'
 
 # Pool config
 POOL=''

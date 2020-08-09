@@ -7,7 +7,7 @@ function createHmy() {
     let hmy = new Harmony(process.env.ENDPOINT,
         {
             chainType: ChainType.Harmony,
-            chainId: ChainID.HmyTestnet,
+            chainId: ChainID.HmyMainnet,
         },
     )
     const wallet = hmy.wallet.addByPrivateKey(process.env.PRIVATE_KEY)
