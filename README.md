@@ -7,12 +7,19 @@ Balancer demo on Harmony
 
 #### Setup
 With Docker (recommended):
-```$xslt
-docker ... //TODO
+```bash
+docker pull harmonyone/seeswap
+docker run -it harmonyone/seeswap
+# follow steps to setup, then you can run commands as follows:
+seeswap <command> <option>
+# For example
+seeswap checkBalance
+seeswap joinPool -t 1SEED -n 100
+seeswap swapTokens -s 1SEED -r 1LINK -n 100
 ```
 
 Without Docker (not recommended):
-```$xslt
+```bash
 git clone https://github.com/harmony-one/seeswap.git
 cd seeswap
 npm install
