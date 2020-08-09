@@ -10,4 +10,4 @@ build-cached:
 	docker build -t harmonyone/seeswap .
 
 upload: build
-	docker push harmonyone/localnet-test
+	docker push harmonyone/seeswap
