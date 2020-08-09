@@ -16,6 +16,8 @@ seeswap <command> <option>
 seeswap checkBalance
 seeswap joinPool -t 1SEED -n 100
 seeswap swapTokens -s 1SEED -r 1LINK -n 100
+# To see all commands do:
+seeswap help
 ```
 
 Without Docker (not recommended):
