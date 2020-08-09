@@ -11,7 +11,7 @@ env_file="# Network config
 ENDPOINT='https://api.s0.b.hmny.io'
 
 # Pool config
-POOL=''
+POOL='0x89ca86c910bf74beaad769b91e2ed277e6d86de3'
 
 # Token A config
 TOKEN_NAME1='1LINK'

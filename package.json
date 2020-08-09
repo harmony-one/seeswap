@@ -41,6 +41,7 @@
     "dependencies": {
         "@harmony-js/core": "^0.1.51",
         "bignumber": "^1.1.0",
+        "bn": "^1.0.5",
         "decimal.js": "^10.2.0",
         "dotenv": "^8.2.0",
         "ganache-cli": "^6.7.0",

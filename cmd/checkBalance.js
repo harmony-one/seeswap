@@ -1,5 +1,7 @@
 require('dotenv').config()
-const BigNumber = require('bignumber.js');
+const bn = require('bn.js')
+var BN = (val) => new bn(val)
+
 const { toBech32 } = require("@harmony-js/crypto");
 
 let initHmy = require('./createHmy')
@@ -10,9 +12,9 @@ const tokenAAddr = process.env.TOKEN_ADDR1
 const tokenB = process.env.TOKEN_NAME2
 const tokenBAddr = process.env.TOKEN_ADDR2
 
-const unit = new BigNumber(1e18)
+const unit = BN(10).pow(BN(18))
 
-let gasOptions = { gasPrice: 1000000000, gasLimit: 6721900 };
+let gasOptions = { gasPrice: 1000000000, gasLimit: 6721900 }
 
 async function checkBalance(token, name, hmy) {
     let tokenContract = hmy.contracts.createContract(tokenJson.abi, token)
@@ -22,8 +24,8 @@ async function checkBalance(token, name, hmy) {
         console.log('[ERROR] Unable to fetch balance.')
         process.exit(0)
     }
-    let temp = new BigNumber(resp.toString())
-    console.log(name + ' balance: ' + temp.dividedBy(unit).toFixed())
+    let temp = BN(resp.toString())
+    console.log(name + ' balance: ' + temp.div(unit))
 }
 
 async function getBalance(hmy) {

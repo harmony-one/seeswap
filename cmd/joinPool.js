@@ -1,5 +1,6 @@
 require('dotenv').config()
-const BigNumber = require('bignumber.js');
+const bn = require('bn.js')
+var BN = (val) => new bn(val)
 
 let initHmy = require('./createHmy')
 
@@ -12,7 +13,7 @@ const tokenAAddr = process.env.TOKEN_ADDR1
 const tokenB = process.env.TOKEN_NAME2
 const tokenBAddr = process.env.TOKEN_ADDR2
 
-const unit = new BigNumber(1e18)
+const unit = BN(10).pow(BN(18))
 
 let gasOptions = { gasPrice: 1000000000, gasLimit: 6721900 };
 
@@ -35,7 +36,7 @@ if (argv.token == null || argv.amount == null) {
 async function joinPool(token, name, amount, hmy) {
     let contract = hmy.contracts.createContract(contractJson.abi, contractAddr)
 
-    let resp = await contract.methods.joinswapExternAmountIn(token, '0x' + amount.toString(16), 0).send(gasOptions)
+    let resp = await contract.methods.joinswapExternAmountIn(token, amount, 0).send(gasOptions)
     if (resp.status === "called") {
         console.log('Pool joined with ' + amount.toFixed() + ' '  + name + '.')
     } else {
@@ -46,8 +47,7 @@ async function joinPool(token, name, amount, hmy) {
 async function approveToken(token, name, amount, hmy) {
     let tokenContract = hmy.contracts.createContract(tokenJson.abi, token)
 
-    let amt = '0x' + amount.toString(16)
-    let resp = await tokenContract.methods.approve(contractAddr, amt).send(gasOptions)
+    let resp = await tokenContract.methods.approve(contractAddr, amount).send(gasOptions)
     if (resp.status === 'called') {
         console.log(name + ' transfer approved: ' + amount)
     } else {
@@ -56,7 +56,7 @@ async function approveToken(token, name, amount, hmy) {
     }
 }
 
-const convertedAmount = new BigNumber(argv.amount).multipliedBy(unit)
+const convertedAmount = BN(argv.amount).mul(unit)
 
 initHmy().then((hmy) => {
     if (argv.token === '1LINK') {

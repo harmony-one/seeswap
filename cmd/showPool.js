@@ -34,11 +34,11 @@ async function getPoolData(hmy) {
     // resp = await contract.methods.getNormalizedWeight(tokenBAddr).call(gasOptions)
     // console.log(tokenB + ' weight: ' + resp.toNumber())
 
-    resp = await contract.methods.getSpotPrice(tokenAAddr, tokenBAddr).call(gasOptions)
+    resp = await contract.methods.getSpotPriceSansFee(tokenAAddr, tokenBAddr).call(gasOptions)
     temp = new BigNumber(resp.toString())
     console.log('Spot price (' + tokenA + ' -> ' + tokenB +'): ' + temp.dividedBy(unit).toFixed())
 
-    resp = await contract.methods.getSpotPrice(tokenBAddr, tokenAAddr).call(gasOptions)
+    resp = await contract.methods.getSpotPriceSansFee(tokenBAddr, tokenAAddr).call(gasOptions)
     temp = new BigNumber(resp.toString())
     console.log('Spot price (' + tokenB + ' -> ' + tokenA +'): ' + temp.dividedBy(unit).toFixed())
 

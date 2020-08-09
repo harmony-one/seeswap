@@ -1,5 +1,6 @@
 require('dotenv').config()
-const BigNumber = require('bignumber.js');
+const bn = require('bn.js')
+var BN = (val) => new bn(val)
 
 let initHmy = require('./createHmy')
 
@@ -12,7 +13,7 @@ const tokenAAddr = process.env.TOKEN_ADDR1
 const tokenB = process.env.TOKEN_NAME2
 const tokenBAddr = process.env.TOKEN_ADDR2
 
-const unit = new BigNumber(1e18)
+const unit = BN(10).pow(BN(18))
 
 const maxPrice = "0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
 
@@ -42,7 +43,7 @@ async function swapToken(tokenSend, tokenReceive, amount, hmy) {
     let contract = hmy.contracts.createContract(contractJson.abi, contractAddr)
 
     // Set minAmountOut to 0 & maxPrice to very high
-    let resp = await contract.methods.swapExactAmountIn(tokenSend, '0x' + amount.toString(16), tokenReceive, 0, maxPrice).send(gasOptions)
+    let resp = await contract.methods.swapExactAmountIn(tokenSend, amount, tokenReceive, 0, maxPrice).send(gasOptions)
     if (resp.status === "called") {
         console.log('Swap successful.')
     } else {
@@ -54,7 +55,7 @@ async function swapToken(tokenSend, tokenReceive, amount, hmy) {
 async function approveToken(token, name, amount, hmy) {
     let tokenContract = hmy.contracts.createContract(tokenJson.abi, token)
 
-    let resp = await tokenContract.methods.approve(contractAddr, '0x' + amount.toString(16)).send(gasOptions)
+    let resp = await tokenContract.methods.approve(contractAddr, amount).send(gasOptions)
     if (resp.status === 'called') {
         console.log(name + ' transfer approved: ' + amount)
     } else {
@@ -63,7 +64,7 @@ async function approveToken(token, name, amount, hmy) {
     }
 }
 
-const convertedAmount = new BigNumber(argv.amount).multipliedBy(unit)
+const convertedAmount = BN(argv.amount).mul(unit)
 
 initHmy().then((hmy) => {
     if (argv.sendToken === '1LINK') {

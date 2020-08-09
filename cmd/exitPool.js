@@ -1,5 +1,6 @@
 require('dotenv').config()
-const BigNumber = require('bignumber.js');
+const bn = require('bn.js')
+var BN = (val) => new bn(val)
 
 let initHmy = require('./createHmy')
 
@@ -11,7 +12,7 @@ const tokenAAddr = process.env.TOKEN_ADDR1
 const tokenB = process.env.TOKEN_NAME2
 const tokenBAddr = process.env.TOKEN_ADDR2
 
-const unit = new BigNumber(1e18)
+const unit = BN(10).pow(BN(18))
 
 const maxAmount = "0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
 
@@ -36,7 +37,7 @@ if (argv.token == null || argv.amount == null) {
 async function exitPool(token, name, amount, hmy) {
     let contract = hmy.contracts.createContract(contractJson.abi, contractAddr)
 
-    let resp = await contract.methods.exitswapExternAmountOut(token, '0x' + amount.toString(16), maxAmount).send(gasOptions)
+    let resp = await contract.methods.exitswapExternAmountOut(token, amount, maxAmount).send(gasOptions)
     if (resp.status === "called") {
         console.log('Successfully withdrew ' + amount.toFixed() + ' ' + name + ' from pool.')
     } else {
@@ -44,7 +45,7 @@ async function exitPool(token, name, amount, hmy) {
     }
 }
 
-const convertedAmount = new BigNumber(argv.amount).multipliedBy(unit)
+const convertedAmount = BN(argv.amount).mul(unit)
 
 initHmy().then((hmy) => {
     if (argv.token === '1LINK') {
