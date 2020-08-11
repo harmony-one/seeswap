@@ -38,7 +38,7 @@ async function joinPool(token, name, amount, hmy) {
 
     let resp = await contract.methods.joinswapExternAmountIn(token, amount, 0).send(gasOptions)
     if (resp.status === "called") {
-        console.log('Pool joined with ' + amount.toFixed() + ' '  + name + '.')
+        console.log('Pool joined with ' + amount + ' '  + name + '.')
     } else {
         console.log('[ERROR] Failed to join pool')
     }
